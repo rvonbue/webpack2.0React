@@ -11,24 +11,24 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.js$/,
+      { test: /\.jsx?$/,
         include: path.join(__dirname, 'src'),
         exclude: /(node_modules|bower_components)/,
         use: {
           loader: 'babel-loader',
-          options: { presets: ['env',"es2015"] }
+          query: { presets: ['env',"es2015", "react"] }
         }
       },
-      {
-          test: require.resolve('jquery'),
-          use: [{
-              loader: 'expose-loader',
-              options: 'jQuery'
-          },{
-              loader: 'expose-loader',
-              options: '$'
-          }]
-      },
+      // {
+      //     test: require.resolve('jquery'),
+      //     use: [{
+      //         loader: 'expose-loader',
+      //         options: 'jQuery'
+      //     },{
+      //         loader: 'expose-loader',
+      //         options: '$'
+      //     }]
+      // },
       {test: /\.less$/,
         use: ExtractTextPlugin.extract({
           use: ["css-loader", "less-loader"],
@@ -39,6 +39,7 @@ module.exports = {
   },
   plugins: [
     new ExtractTextPlugin("allStyles.css"),
+    new HtmlWebpackPlugin({template: './src/index.html'}),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
       debug: false

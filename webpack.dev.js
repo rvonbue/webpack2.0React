@@ -14,27 +14,34 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.js$/,
+      { test: /\.jsx?$/,
         include: path.join(__dirname, 'src'),
         exclude: /(node_modules|bower_components)/,
         use: {
           loader: 'babel-loader',
-          options: { presets: ['env',"es2015"] }
+          options: { presets: ['env',"es2015", "react"] }
         }
       },
       {
-          test: require.resolve('jquery'),
-          use: [{
-              loader: 'expose-loader',
-              options: 'jQuery'
-          },{
-              loader: 'expose-loader',
-              options: '$'
-          }]
+        test: require.resolve('jquery'),
+        use: [
+          {
+            loader: 'expose-loader',
+            options: 'jQuery'
+          },
+          {
+            loader: 'expose-loader',
+            options: '$'
+          }
+        ]
       },
       { test: /\.less$/, use: [
         { loader: "style-loader"},
-        { loader: "css-loader", options: { sourceMap: true }},
+        { loader: "css-loader",
+          options: {
+            sourceMap: true
+          }
+        },
         { loader: "less-loader",
           options: {
             strictMath: true,
@@ -46,7 +53,11 @@ module.exports = {
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({template: './src/index.html'}),
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+      filename: 'index.html',
+      inject: 'body'
+    }),
     new webpack.HotModuleReplacementPlugin(),
   ],
   devServer: {

@@ -1,13 +1,15 @@
-require("expose-loader?$!jquery");
+// require("expose-loader?$!jquery");
 
 import _ from 'lodash';
 import stylesheet from "./styles/index.less";
 
-import { sayHello } from './js/module';
 
-$(function () {
-  $("body").append("<hr><p>Welcome</p>");
-});
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './components/App.jsx';
 
+ReactDOM.render(< App />, document.getElementById('root'));
 
-console.log("sdsdfdfs", sayHello('World'));
+// $(function () {
+//   $("body").append("<hr><p>Welcome</p>");
+// });
